@@ -23,7 +23,6 @@ public class ApiClient {
         try {
             logger.info("start call api open account request : {}", requestBody);
 
-
             R response = restTemplate.postForObject(url, entity, responseType);
 
             logger.info("end call api open account  response : {}", response);

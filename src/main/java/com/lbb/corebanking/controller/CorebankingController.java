@@ -5,8 +5,12 @@ import com.lbb.corebanking.domain.model.checkBalance.GetBalanceRes;
 import com.lbb.corebanking.domain.model.exchangerate.ApiResponse;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateReq;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateRes;
+import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferReq;
+import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferRes;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountReq;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountRes;
+import com.lbb.corebanking.domain.model.openaccount.td.OpenAccRes;
+import com.lbb.corebanking.domain.model.openaccount.td.OpenTdReq;
 import com.lbb.corebanking.domain.model.statement.StatementReq;
 import com.lbb.corebanking.domain.model.statement.StatementRes;
 import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryReq;
@@ -54,6 +58,7 @@ public class CorebankingController {
         return ResponseEntity.ok(coreBankingService.getStatement(req));
     }
 
+
     @PostMapping("/getRate")
     public ExchangeRateRes getRate (@RequestBody ExchangeRateReq req) {
         logger.info(req);
@@ -63,6 +68,22 @@ public class CorebankingController {
         data = coreBankingService.getExchange(req);
 
         result = convertObject.convertExchange(data);
+        return result;
+    }
+
+    @PostMapping("/openTDAccount")
+    public OpenAccRes openTDAccount (@RequestBody OpenTdReq req) {
+        logger.info(req);
+        OpenAccRes result = new OpenAccRes();
+        result = coreBankingService.openTDAccount(req);
+        return result;
+    }
+
+    @PostMapping("/buyGoldFundTransfer")
+    public BuyGoldTransferRes buyGoldFundTransfer (@RequestBody BuyGoldTransferReq req) {
+        logger.info(req);
+        BuyGoldTransferRes result = new BuyGoldTransferRes();
+        result = coreBankingService.buyGoldTransfer(req);
         return result;
     }
 }

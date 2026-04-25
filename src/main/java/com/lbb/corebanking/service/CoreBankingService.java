@@ -6,8 +6,12 @@ import com.lbb.corebanking.domain.model.checkBalance.GetBalanceRes;
 import com.lbb.corebanking.domain.model.exchangerate.ApiResponse;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateReq;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateRes;
+import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferReq;
+import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferRes;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountReq;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountRes;
+import com.lbb.corebanking.domain.model.openaccount.td.OpenAccRes;
+import com.lbb.corebanking.domain.model.openaccount.td.OpenTdReq;
 import com.lbb.corebanking.domain.model.statement.StatementReq;
 import com.lbb.corebanking.domain.model.statement.StatementRes;
 import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryReq;
@@ -114,4 +118,26 @@ public class CoreBankingService {
                 .toUriString();
                return  apiClient.get(url, headers , ApiResponse.class );
     }
+
+    public OpenAccRes openTDAccount (OpenTdReq req){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-api-key", apikey);
+        headers.setBearerAuth(token);
+        String url = baseUrl+"/dep/accttd";
+
+        return apiClient.post(url, req ,headers , OpenAccRes.class );
+    }
+
+    public BuyGoldTransferRes buyGoldTransfer (BuyGoldTransferReq req){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-api-key", apikey);
+        headers.setBearerAuth(token);
+        String url = baseUrl+"/gft/internaltransfers";
+
+        return apiClient.post(url, req ,headers , BuyGoldTransferRes.class );
+    }
+
+
 }
