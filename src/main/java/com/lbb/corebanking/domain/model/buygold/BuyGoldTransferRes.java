@@ -1,4 +1,4 @@
-package com.lbb.corebanking.domain.model.fundtransfer;
+package com.lbb.corebanking.domain.model.buygold;
 
 import lombok.Data;
 

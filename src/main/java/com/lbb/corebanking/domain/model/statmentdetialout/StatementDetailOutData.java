@@ -1,43 +1,54 @@
-package com.lbb.corebanking.domain.model.fundtransfer;
+package com.lbb.corebanking.domain.model.statmentdetialout;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
-public class Details {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class StatementDetailOutData {
+
+
     private String refNo;
     private String tranStatus;
     private String tranSource;
     private String tranType;
-    private OffsetDateTime tranDate;
-    private String tranCountry;
 
+    private String tranDate;
+
+    private String tranCountry;
     private BigDecimal totalDrAmount;
     private BigDecimal totalCrAmount;
-
     private String instructedCcy;
     private BigDecimal instructedAmount;
-    private OffsetDateTime instructedDate;
+
+    private String instructedDate;
 
     private String fixedSide;
 
-    private OffsetDateTime drValueDate;
+    // Debit side
+    private String drValueDate;
+
     private String drClientNo;
     private String drGlType;
     private String drAcctNo;
     private String drGlCode;
     private String drBranch;
     private String drProfitCentre;
-    private Integer drSeqNo;
+    private Long drSeqNo;
     private String drCcy;
     private BigDecimal drAmount;
     private String drSettleMtd;
     private BigDecimal drBaseEquiv;
 
-    private OffsetDateTime crValueDate;
+    // Credit side
+
+    private String crValueDate;
+
     private String crCcy;
     private BigDecimal crAmount;
     private String crClientNo;
@@ -46,15 +57,15 @@ public class Details {
     private String crGlCode;
     private String crBranch;
     private String crProfitCentre;
-    private Integer crSeqNo;
+    private Long crSeqNo;
     private String crSettleMtd;
     private BigDecimal crBaseEquiv;
 
+    // Detail amounts
     private BigDecimal dtlDebitAmount;
     private BigDecimal drChargeAmount;
     private BigDecimal drExchRate;
     private String drExchQuote;
-
     private BigDecimal dtlCreditAmount;
     private BigDecimal crChargeAmount;
     private BigDecimal crExchRate;
@@ -64,68 +75,58 @@ public class Details {
     private String kondorRefNo;
     private BigDecimal spotRate;
     private String spotQuote;
-
     private String acctExec;
     private String bookBranch;
     private String incRefNo;
     private String channel;
     private String channelSource;
     private String channelRefNo;
-
     private String narrative;
     private String rejectReason;
     private String errorCodeMsg;
-
     private String variableSymbol;
     private String constantSymbol;
     private String specificSymbol;
-
-    private OffsetDateTime tranTime;
+    private String tranTime;
     private String tranClass;
-
     private BigDecimal origSpotRate;
     private String srcProgramId;
-
     private String firstUserId;
     private String lastUserId;
     private String verifiedBy;
-
     private String drSwfSettleKey;
     private String crSwfSettleKey;
 
     private PaymentOrdDetailRec paymentOrdDetailRec;
-
-    private List<Object> paymentsChargesList;
+    private List<PaymentsCharge> paymentsChargesList;
 
     private Object crCommonSettleNostroMt202Rec;
     private Object crCommonSettleNostroMt200Rec;
     private Object drCommonSettleNostroMt210Rec;
+    private String rbRestrSeqNo;
 
-    private Integer rbRestrSeqNo;
-
-    private int version;
-    private int bizVersion;
-
+    private Integer version;
+    private Integer bizVersion;
     private String createdBy;
-    private OffsetDateTime createdDt;
-    private OffsetDateTime journalDt;
-    private long journalNo;
 
+    private String createdDt;
+
+    private String journalDt;
+
+    private Long journalNo;
     private String modifiedBy;
-    private OffsetDateTime modifiedDt;
+
+    private String modifiedDt;
 
     private List<Object> virtualAttributeList;
     private List<Object> dataExtensionList;
-
     private Header header;
-
     private Object securityHint;
     private Object digitalSignature;
     private String hasNextYn;
     private List<Object> messageInfoList;
     private Boolean hasError;
     private String publicKey;
-    private Object lastSuccessfulValidation;
-    private Object changeSummary;
-
+    private String lastSuccessfulValidation;
+    private String changeSummary;
 }

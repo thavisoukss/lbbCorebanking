@@ -1,15 +1,12 @@
-package com.lbb.corebanking.domain.model.fundtransfer;
+package com.lbb.corebanking.domain.model.buygold;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Data;
 
 @Data
-public class PaymentOrdDetailRec {
-
-    private String tranDate;
-    private String tranSource;
-    private OrdCustomerStructRec ordCustomerStructRec;
+public class OrdCustomerStructRec {
+    private String address;
 
     // ===== toString JSON ===== //
     @Override

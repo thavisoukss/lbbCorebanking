@@ -5,16 +5,24 @@ import com.lbb.corebanking.domain.model.checkBalance.GetBalanceRes;
 import com.lbb.corebanking.domain.model.exchangerate.ApiResponse;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateReq;
 import com.lbb.corebanking.domain.model.exchangerate.ExchangeRateRes;
-import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferReq;
-import com.lbb.corebanking.domain.model.fundtransfer.BuyGoldTransferRes;
+import com.lbb.corebanking.domain.model.buygold.BuyGoldTransferReq;
+import com.lbb.corebanking.domain.model.buygold.BuyGoldTransferRes;
+import com.lbb.corebanking.domain.model.fundtransfer.TransferRequest;
+import com.lbb.corebanking.domain.model.fundtransfer.TransferResponse;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountReq;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountRes;
 import com.lbb.corebanking.domain.model.openaccount.td.OpenAccRes;
 import com.lbb.corebanking.domain.model.openaccount.td.OpenTdReq;
 import com.lbb.corebanking.domain.model.statement.StatementReq;
 import com.lbb.corebanking.domain.model.statement.StatementRes;
+import com.lbb.corebanking.domain.model.statementdeailin.StatementDetailInReq;
+import com.lbb.corebanking.domain.model.statementdeailin.StatementDetailInRes;
+import com.lbb.corebanking.domain.model.statmentdetialout.StatementDetailOutReq;
+import com.lbb.corebanking.domain.model.statmentdetialout.StatementDetailOutRes;
 import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryReq;
 import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryRes;
+import com.lbb.corebanking.domain.model.topup.TopUpReq;
+import com.lbb.corebanking.domain.model.topup.TopUpRes;
 import com.lbb.corebanking.service.ConvertObject;
 import com.lbb.corebanking.service.CoreBankingService;
 import org.apache.logging.log4j.LogManager;
@@ -58,6 +66,15 @@ public class CorebankingController {
         return ResponseEntity.ok(coreBankingService.getStatement(req));
     }
 
+    @PostMapping("/getStatementDetailIN")
+    public ResponseEntity<StatementDetailInRes> getStatementDetailIn (@RequestBody StatementDetailInReq req) {
+        return ResponseEntity.ok(coreBankingService.getStatementDetailIn(req));
+    }
+
+    @PostMapping("/getStatementDetailOut")
+    public ResponseEntity<StatementDetailOutRes> getStatementDetailOut (@RequestBody StatementDetailOutReq req) {
+        return ResponseEntity.ok(coreBankingService.getStatementDetailOut(req));
+    }
 
     @PostMapping("/getRate")
     public ExchangeRateRes getRate (@RequestBody ExchangeRateReq req) {
@@ -84,6 +101,22 @@ public class CorebankingController {
         logger.info(req);
         BuyGoldTransferRes result = new BuyGoldTransferRes();
         result = coreBankingService.buyGoldTransfer(req);
+        return result;
+    }
+
+    @PostMapping("/internalTransfer")
+    public TransferResponse internalTransfer (@RequestBody TransferRequest req) {
+        logger.info(req);
+        TransferResponse result = new TransferResponse();
+        result = coreBankingService.internalTransfer(req);
+        return result;
+    }
+
+    @PostMapping("/topup")
+    public TopUpRes topup (@RequestBody TopUpReq req) {
+        logger.info(req);
+        TopUpRes result = new TopUpRes();
+        result = coreBankingService.topup(req);
         return result;
     }
 }
