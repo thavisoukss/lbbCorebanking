@@ -231,6 +231,36 @@ public class ApiClient {
         }
     }
 
+
+    public <T, R> R reversal(String url, T requestBody, HttpHeaders headers ,Class<R> responseType ) {
+        logger.info("Calling External API: URL={}", url);
+
+        HttpEntity<T> entity = new HttpEntity<>(requestBody, headers);
+
+        try {
+            logger.info("start call api reversal  request : {}", requestBody);
+
+            R response = restTemplate.postForObject(url, entity, responseType);
+
+            logger.info("end call api reversal   response : {}", response);
+            return response;
+
+        } catch (org.springframework.web.client.ResourceAccessException e) {
+            // ກໍລະນີ Timeout ຫຼື ເຊື່ອມຕໍ່ບໍ່ໄດ້
+            logger.error("API Timeout or Connection Error: URL={}, Error={}", url, e.getMessage());
+            throw new RuntimeException("External API reversal  service unavailable (Timeout)");
+
+        } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            // ກໍລະນີ API ຕອບກັບມາເປັນ Error Status (4xx, 5xx)
+            logger.error("API Error Status: {}, Response: {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw e;
+
+        } catch (Exception e) {
+            logger.error("Unexpected API Error: {}", e.getMessage());
+            throw e;
+        }
+    }
+
     public <T, R> R topup(String url, T requestBody, HttpHeaders headers ,Class<R> responseType ) {
         logger.info("Calling External API: URL={}", url);
 
@@ -260,6 +290,33 @@ public class ApiClient {
         }
     }
 
+    public <T, R> R widthDraw(String url, T requestBody, HttpHeaders headers ,Class<R> responseType ) {
+        logger.info("Calling External API: URL={}", url);
 
+        HttpEntity<T> entity = new HttpEntity<>(requestBody, headers);
+
+        try {
+            logger.info("start call api widthdraw request : {}", requestBody);
+
+            R response = restTemplate.postForObject(url, entity, responseType);
+
+            logger.info("end call api widthdraw  response : {}", response);
+            return response;
+
+        } catch (org.springframework.web.client.ResourceAccessException e) {
+            // ກໍລະນີ Timeout ຫຼື ເຊື່ອມຕໍ່ບໍ່ໄດ້
+            logger.error("API Timeout or Connection Error: URL={}, Error={}", url, e.getMessage());
+            throw new RuntimeException("External API internal transfer  service unavailable (Timeout)");
+
+        } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            // ກໍລະນີ API ຕອບກັບມາເປັນ Error Status (4xx, 5xx)
+            logger.error("API Error Status: {}, Response: {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw e;
+
+        } catch (Exception e) {
+            logger.error("Unexpected API Error: {}", e.getMessage());
+            throw e;
+        }
+    }
 
 }

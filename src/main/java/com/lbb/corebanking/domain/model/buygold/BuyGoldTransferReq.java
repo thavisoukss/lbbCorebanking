@@ -61,7 +61,7 @@ public class BuyGoldTransferReq {
     private String tranClass;
     private String srcProgramId;
 
-    private PaymentOrdDetailRec paymentOrdDetailRec;
+    private BuyGoldPaymentOrdDetailRec paymentOrdDetailRec;
 
 
     // ===== toString JSON ===== //

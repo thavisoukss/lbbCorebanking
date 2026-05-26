@@ -13,6 +13,8 @@ import com.lbb.corebanking.domain.model.openaccount.OpenAccountReq;
 import com.lbb.corebanking.domain.model.openaccount.OpenAccountRes;
 import com.lbb.corebanking.domain.model.openaccount.td.OpenAccRes;
 import com.lbb.corebanking.domain.model.openaccount.td.OpenTdReq;
+import com.lbb.corebanking.domain.model.reversal.ReversalReq;
+import com.lbb.corebanking.domain.model.reversal.ReversalRes;
 import com.lbb.corebanking.domain.model.statement.StatementReq;
 import com.lbb.corebanking.domain.model.statement.StatementRes;
 import com.lbb.corebanking.domain.model.statementdeailin.StatementDetailInReq;
@@ -23,6 +25,8 @@ import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryReq;
 import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryRes;
 import com.lbb.corebanking.domain.model.topup.TopUpReq;
 import com.lbb.corebanking.domain.model.topup.TopUpRes;
+import com.lbb.corebanking.domain.model.widthdraw.WidthDrawReq;
+import com.lbb.corebanking.domain.model.widthdraw.WidthDrawRes;
 import com.lbb.corebanking.service.ConvertObject;
 import com.lbb.corebanking.service.CoreBankingService;
 import org.apache.logging.log4j.LogManager;
@@ -49,6 +53,11 @@ public class CorebankingController {
     @PostMapping("/checkBalance")
     public ResponseEntity<GetBalanceRes> checkBalance(@RequestBody GetBalanceReq req) {
         return ResponseEntity.ok(coreBankingService.getBalance(req));
+    }
+
+    @PostMapping("/reversal")
+    public ResponseEntity<ReversalRes> checkBalance(@RequestBody ReversalReq req) {
+        return ResponseEntity.ok(coreBankingService.reversal(req));
     }
 
     @PostMapping("/openAccount")
@@ -100,7 +109,7 @@ public class CorebankingController {
     public BuyGoldTransferRes buyGoldFundTransfer (@RequestBody BuyGoldTransferReq req) {
         logger.info(req);
         BuyGoldTransferRes result = new BuyGoldTransferRes();
-        result = coreBankingService.buyGoldTransfer(req);
+        result = coreBankingService.buyGoldTransferDate(req);
         return result;
     }
 
@@ -108,7 +117,7 @@ public class CorebankingController {
     public TransferResponse internalTransfer (@RequestBody TransferRequest req) {
         logger.info(req);
         TransferResponse result = new TransferResponse();
-        result = coreBankingService.internalTransfer(req);
+        result = coreBankingService.internalTransferData(req);
         return result;
     }
 
@@ -116,7 +125,15 @@ public class CorebankingController {
     public TopUpRes topup (@RequestBody TopUpReq req) {
         logger.info(req);
         TopUpRes result = new TopUpRes();
-        result = coreBankingService.topup(req);
+        result = coreBankingService.topUpDate(req);
+        return result;
+    }
+
+    @PostMapping("/widthDraw")
+    public BuyGoldTransferRes widthDraw (@RequestBody WidthDrawReq req) {
+        logger.info(req);
+        BuyGoldTransferRes result = new BuyGoldTransferRes();
+        result = coreBankingService.widthDrawDate(req);
         return result;
     }
 }

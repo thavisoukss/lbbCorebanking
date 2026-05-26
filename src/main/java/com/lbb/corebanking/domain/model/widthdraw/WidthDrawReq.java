@@ -1,16 +1,14 @@
-package com.lbb.corebanking.domain.model.topup;
+package com.lbb.corebanking.domain.model.widthdraw;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class TopUpReq {
+public class WidthDrawReq {
+
+
     @JsonProperty("tranStatus")
     private String tranStatus;
 
@@ -27,16 +25,19 @@ public class TopUpReq {
     private String tranCountry;
 
     @JsonProperty("totalDrAmount")
-    private BigDecimal totalDrAmount;
+    private String totalDrAmount;
 
     @JsonProperty("totalCrAmount")
-    private BigDecimal totalCrAmount;
+    private String totalCrAmount;
+
+    @JsonProperty("narrative")
+    private String narrative;
 
     @JsonProperty("instructedCcy")
     private String instructedCcy;
 
     @JsonProperty("instructedAmount")
-    private BigDecimal instructedAmount;
+    private String instructedAmount;
 
     @JsonProperty("instructedDate")
     private String instructedDate;
@@ -44,8 +45,7 @@ public class TopUpReq {
     @JsonProperty("fixedSide")
     private String fixedSide;
 
-    // ---------- Debit side ----------
-
+    // Debit side fields
     @JsonProperty("drValueDate")
     private String drValueDate;
 
@@ -55,8 +55,8 @@ public class TopUpReq {
     @JsonProperty("drGlType")
     private String drGlType;
 
-    @JsonProperty("drGlCode")
-    private String drGlCode;
+    @JsonProperty("drAcctNo")
+    private String drAcctNo;
 
     @JsonProperty("drBranch")
     private String drBranch;
@@ -71,16 +71,21 @@ public class TopUpReq {
     private String drCcy;
 
     @JsonProperty("drAmount")
-    private BigDecimal drAmount;
+    private String drAmount;
 
     @JsonProperty("drSettleMtd")
     private String drSettleMtd;
 
     @JsonProperty("drBaseEquiv")
-    private BigDecimal drBaseEquiv;
+    private String drBaseEquiv;
 
-    // ---------- Credit side ----------
+    @JsonProperty("drExchRate")
+    private String drExchRate;
 
+    @JsonProperty("dtlDebitAmount")
+    private String dtlDebitAmount;
+
+    // Credit side fields
     @JsonProperty("crValueDate")
     private String crValueDate;
 
@@ -88,7 +93,7 @@ public class TopUpReq {
     private String crCcy;
 
     @JsonProperty("crAmount")
-    private BigDecimal crAmount;
+    private String crAmount;
 
     @JsonProperty("crClientNo")
     private String crClientNo;
@@ -96,8 +101,8 @@ public class TopUpReq {
     @JsonProperty("crGlType")
     private String crGlType;
 
-    @JsonProperty("crAcctNo")
-    private String crAcctNo;
+    @JsonProperty("crGlCode")
+    private String crGlCode;
 
     @JsonProperty("crBranch")
     private String crBranch;
@@ -112,33 +117,25 @@ public class TopUpReq {
     private String crSettleMtd;
 
     @JsonProperty("crBaseEquiv")
-    private BigDecimal crBaseEquiv;
-
-    // ---------- Rates / detail amounts ----------
-
-    @JsonProperty("dtlDebitAmount")
-    private BigDecimal dtlDebitAmount;
-
-    @JsonProperty("drExchRate")
-    private BigDecimal drExchRate;
-
-    @JsonProperty("dtlCreditAmount")
-    private BigDecimal dtlCreditAmount;
+    private String crBaseEquiv;
 
     @JsonProperty("crExchRate")
-    private BigDecimal crExchRate;
+    private String crExchRate;
 
+    @JsonProperty("dtlCreditAmount")
+    private String dtlCreditAmount;
+
+    // Rate and exchange fields
     @JsonProperty("rateType")
     private String rateType;
 
     @JsonProperty("spotRate")
-    private BigDecimal spotRate;
+    private String spotRate;
 
     @JsonProperty("spotQuote")
     private String spotQuote;
 
-    // ---------- Booking / channel ----------
-
+    // System fields
     @JsonProperty("bookBranch")
     private String bookBranch;
 
@@ -155,8 +152,10 @@ public class TopUpReq {
     private String srcProgramId;
 
     @JsonProperty("paymentOrdDetailRec")
-    private PaymentOrdDetailRec paymentOrdDetailRec;
+    private WidthDrawPaymentOrderDetailRecord paymentOrdDetailRec;
 
+
+    // ===== toString JSON ===== //
     @Override
     public String toString() {
         try {
@@ -168,6 +167,4 @@ public class TopUpReq {
             return "Error converting to JSON: " + e.getMessage();
         }
     }
-
-
 }

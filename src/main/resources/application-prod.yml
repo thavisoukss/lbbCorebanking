@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     continue-on-error: ${DB_CONTINUE_ON_ERROR:true}
-    url: ${DB_URL:jdbc:oracle:thin:@//localhost:1521/xe}
-    username: ${DB_USERNAME:myuser}
-    password: ${DB_PASSWORD:mypassword}
+    url: ${DB_URL:jdbc:oracle:thin:@//172.16.0.79/LBBPRODMB.lbb.local}
+    username: ${DB_USERNAME:MBOWNER}
+    password: ${DB_PASSWORD:Pa##w0rdHero%>25}
     driver-class-name: ${DB_DRIVER:oracle.jdbc.OracleDriver}
   jpa:
     database-platform: ${JPA_DIALECT:org.hibernate.dialect.Oracle12cDialect}
@@ -18,7 +18,7 @@ external:
       connect-timeout: ${API_CLIENT_CONNECT_TIMEOUT:5000}
       read-timeout: ${API_CLIENT_READ_TIMEOUT:10000}
     core-banking:
-      url: ${COREBANKING_URL:http://172.16.4.112:8443/api/v1}
+      url: ${COREBANKING_URL:http://172.16.0.32:8443/api/v1}
       x-api-key: ${COREBANKING_API_KEY:A0B8A2A9C758793A24CCDBD9451DA9A27767FE55}
       token: ${COREBANKING_TOKEN:eyJraWQiOiJsYmJkaWdpdGFsIiwidHlwIjoiSldUIiwiYWxnIjoiUlM1MTIifQ.eyJzdWIiOiJsYmJkaWdpdGFsIiwiaXNzIjoibGJiZGlnaXRhbCIsImlhdCI6MTc0NjUwNzUxNiwiZXhwIjoxOTM1NzIzNTE2fQ.SFp7YBP62NVLEgJdbdDdPrZvKaZmyCulcGc-5QU8CP8klnFbD8I7UJN--wfwOHA0jTcqL7GRo6UfZQKNubv28I-vtTHv3dK08YZX-GFr-5-Z-ErpPuOWXOlTO8H0ymKXZB-NpId1rER3JFgP1OxDVlWzv4STru9TSKeZsUC7ae3zBHo5tABt_KCxUV1LGOfnZXQOaPC80y65f5ZbxJ1D2f-5QHCYIbVDfTkTWvQ3WJOvNQtvKDRaJksmFuDhAmrO9XHoQVqp0Qc7wdcJbeCejoVLz36KIRjy1bglfF2wnd0EIX35GkptwspdsM_d4DEd8OqM01yR_7WDsfj5mPPWLF1xU_1A3lqOvtzpSN4y1RgCiPdtLRPuO6pefKiFLEA4D5ROphik_pyxwC7biMF2-GplVctZ7wuF0yeKHGMufgOXKSMEeNu9pq1Zn8O5xLR9EKh9xMMYoBRFsVrmVv5XnwqmWshDJ-rdM2t77J1cO3EsTNY04AuQAGI37Azd1js7bK7T0GpRkg-dp25QIQHddLhWQs0QTWVOEI5_L-b-wliHhhXfkZN1h-Hs3Xzveo7WOcJBAuLdWleNRzqFu5ZJHDRC6_Ly2rKvufluOL2N0Gs6g0jvbJO33dl9qCgJ-aH29f6H_70MCdY6Nu3y4rVTfqVyWRLRyBJ6jFON8wf4RU0}
 

@@ -93,7 +93,7 @@ public class Details {
     private String drSwfSettleKey;
     private String crSwfSettleKey;
 
-    private PaymentOrdDetailRec paymentOrdDetailRec;
+    private BuyGoldPaymentOrdDetailRec paymentOrdDetailRec;
 
     private List<Object> paymentsChargesList;
 

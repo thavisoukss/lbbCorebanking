@@ -10,6 +10,10 @@ public class StatementReq {
     private String limit;
     private String offset;
     private String acctNo;
+    private String sort;
+    private String startDate;
+    private String endDate;
+    private String ccy;
 
     @Override
     public String toString() {

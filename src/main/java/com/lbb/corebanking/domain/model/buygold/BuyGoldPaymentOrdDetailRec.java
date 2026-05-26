@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Data;
 
 @Data
-public class PaymentOrdDetailRec {
+public class BuyGoldPaymentOrdDetailRec {
 
     private String tranDate;
     private String tranSource;
