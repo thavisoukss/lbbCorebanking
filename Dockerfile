@@ -42,8 +42,8 @@ EXPOSE 8080
 # Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
-#docker build --platform linux/amd64  -t 172.16.4.62:5000/customer/corebanking-service-1:1.0.16 .
-#docker push 172.16.4.62:5000/customer/corebanking-service-1:1.0.16
+#docker build --platform linux/amd64  -t 172.16.4.62:5000/customer/corebanking-service-1:1.0.17 .
+#docker push 172.16.4.62:5000/customer/corebanking-service-1:1.0.17
 
 
 
