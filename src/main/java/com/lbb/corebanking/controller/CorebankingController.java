@@ -28,6 +28,7 @@ import com.lbb.corebanking.domain.model.topup.TopUpRes;
 import com.lbb.corebanking.domain.model.widthdraw.WidthDrawReq;
 import com.lbb.corebanking.service.ConvertObject;
 import com.lbb.corebanking.service.CoreBankingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,94 +46,112 @@ public class CorebankingController {
     @Autowired ConvertObject convertObject;
 
     @GetMapping("/test")
-    public String  Test(){
+    public String Test() {
         return "Test";
     }
 
     @PostMapping("/checkBalance")
-    public ResponseEntity<GetBalanceRes> checkBalance(@RequestBody GetBalanceReq req) {
-        return ResponseEntity.ok(coreBankingService.getBalance(req));
+    public ResponseEntity<GetBalanceRes> checkBalance(@RequestBody GetBalanceReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<GetBalanceRes> result = ResponseEntity.ok(coreBankingService.getBalance(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/reversal")
-    public ResponseEntity<ReversalRes> checkBalance(@RequestBody ReversalReq req) {
-        return ResponseEntity.ok(coreBankingService.reversal(req));
+    public ResponseEntity<ReversalRes> reversal(@RequestBody ReversalReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<ReversalRes> result = ResponseEntity.ok(coreBankingService.reversal(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/openAccount")
-    public ResponseEntity<OpenAccountRes>openAccount (@RequestBody OpenAccountReq req) {
-        return ResponseEntity.ok(coreBankingService.openAccount(req));
+    public ResponseEntity<OpenAccountRes> openAccount(@RequestBody OpenAccountReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<OpenAccountRes> result = ResponseEntity.ok(coreBankingService.openAccount(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/termAccountInquery")
-    public ResponseEntity<TermDepositInqueryRes>termAccountInquery (@RequestBody TermDepositInqueryReq req) {
-        return ResponseEntity.ok(coreBankingService.termDepositInquery(req));
+    public ResponseEntity<TermDepositInqueryRes> termAccountInquery(@RequestBody TermDepositInqueryReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<TermDepositInqueryRes> result = ResponseEntity.ok(coreBankingService.termDepositInquery(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/getStatement")
-    public ResponseEntity<StatementRes> getStatement (@RequestBody StatementReq req) {
-        return ResponseEntity.ok(coreBankingService.getStatement(req));
+    public ResponseEntity<StatementRes> getStatement(@RequestBody StatementReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<StatementRes> result = ResponseEntity.ok(coreBankingService.getStatement(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/getStatementDetailIN")
-    public ResponseEntity<StatementDetailInRes> getStatementDetailIn (@RequestBody StatementDetailInReq req) {
-        return ResponseEntity.ok(coreBankingService.getStatementDetailIn(req));
+    public ResponseEntity<StatementDetailInRes> getStatementDetailIn(@RequestBody StatementDetailInReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<StatementDetailInRes> result = ResponseEntity.ok(coreBankingService.getStatementDetailIn(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/getStatementDetailOut")
-    public ResponseEntity<StatementDetailOutRes> getStatementDetailOut (@RequestBody StatementDetailOutReq req) {
-        return ResponseEntity.ok(coreBankingService.getStatementDetailOut(req));
+    public ResponseEntity<StatementDetailOutRes> getStatementDetailOut(@RequestBody StatementDetailOutReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ResponseEntity<StatementDetailOutRes> result = ResponseEntity.ok(coreBankingService.getStatementDetailOut(req));
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
+        return result;
     }
 
     @PostMapping("/getRate")
-    public ExchangeRateRes getRate (@RequestBody ExchangeRateReq req) {
-        logger.info(req);
-        ApiResponse data = new ApiResponse();
-        ExchangeRateRes result = new ExchangeRateRes();
-
-        data = coreBankingService.getExchange(req);
-
-        result = convertObject.convertExchange(data);
+    public ExchangeRateRes getRate(@RequestBody ExchangeRateReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        ApiResponse data = coreBankingService.getExchange(req);
+        ExchangeRateRes result = convertObject.convertExchange(data);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 
     @PostMapping("/openTDAccount")
-    public OpenAccRes openTDAccount (@RequestBody OpenTdReq req) {
-        logger.info(req);
-        OpenAccRes result = new OpenAccRes();
-        result = coreBankingService.openTDAccount(req);
+    public OpenAccRes openTDAccount(@RequestBody OpenTdReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        OpenAccRes result = coreBankingService.openTDAccount(req);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 
     @PostMapping("/buyGoldFundTransfer")
-    public BuyGoldTransferRes buyGoldFundTransfer (@RequestBody BuyGoldTransferReq req) {
-        logger.info(req);
-        BuyGoldTransferRes result = new BuyGoldTransferRes();
-        result = coreBankingService.buyGoldTransferDate(req);
+    public BuyGoldTransferRes buyGoldFundTransfer(@RequestBody BuyGoldTransferReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        BuyGoldTransferRes result = coreBankingService.buyGoldTransferDate(req);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 
     @PostMapping("/internalTransfer")
-    public TransferResponse internalTransfer (@RequestBody TransferRequest req) {
-        logger.info(req);
-        TransferResponse result = new TransferResponse();
-        result = coreBankingService.internalTransferData(req);
+    public TransferResponse internalTransfer(@RequestBody TransferRequest req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        TransferResponse result = coreBankingService.internalTransferData(req);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 
     @PostMapping("/topup")
-    public TopUpRes topup (@RequestBody TopUpReq req) {
-        logger.info(req);
-        TopUpRes result = new TopUpRes();
-        result = coreBankingService.topUpDate(req);
+    public TopUpRes topup(@RequestBody TopUpReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        TopUpRes result = coreBankingService.topUpDate(req);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 
     @PostMapping("/widthDraw")
-    public BuyGoldTransferRes widthDraw (@RequestBody WidthDrawReq req) {
-        logger.info(req);
-        BuyGoldTransferRes result = new BuyGoldTransferRes();
-        result = coreBankingService.widthDrawDate(req);
+    public BuyGoldTransferRes widthDraw(@RequestBody WidthDrawReq req, HttpServletRequest request) {
+        logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
+        BuyGoldTransferRes result = coreBankingService.widthDrawDate(req);
+        logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
         return result;
     }
 }
