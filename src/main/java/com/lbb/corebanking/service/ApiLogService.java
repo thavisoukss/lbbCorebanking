@@ -35,9 +35,8 @@ public class ApiLogService {
         long durationMs = startMs != null ? System.currentTimeMillis() - startMs : 0;
 
         // Priority 1: B3 headers from upstream service (API Gateway)
-        String traceId    = (String) request.getAttribute("_traceId");
-        String spanId     = (String) request.getAttribute("_spanId");
-        String parentSpanId = (String) request.getAttribute("_parentSpanId");
+        String traceId = (String) request.getAttribute("_traceId");
+        String spanId  = (String) request.getAttribute("_spanId");
 
         // Priority 2: Micrometer current span
         if (traceId == null) {
@@ -53,19 +52,18 @@ public class ApiLogService {
             traceId = (String) request.getAttribute("_requestId");
         }
 
-        persistLog(traceId, spanId, parentSpanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
+        persistLog(traceId, spanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
     }
 
     // Runs in background thread — only uses pre-captured data, no thread-local access
     @Async
-    public void persistLog(String traceId, String spanId, String parentSpanId, String method, String path,
+    public void persistLog(String traceId, String spanId, String method, String path,
                            String requestBody, String responseBody, int responseCode,
                            LocalDateTime startTime, LocalDateTime endTime, long durationMs) {
         try {
             ApiLog log = new ApiLog();
             log.setTraceId(traceId);
             log.setSpanId(spanId);
-            log.setParentSpanId(parentSpanId);
             log.setMethod(method);
             log.setPath(path);
             log.setRequestBody(requestBody);
