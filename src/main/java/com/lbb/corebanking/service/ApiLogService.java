@@ -24,36 +24,44 @@ public class ApiLogService {
         this.tracer = tracer;
     }
 
-    @Async
+    // Runs in request thread — captures span context and request data before async handoff
     public void save(HttpServletRequest request, String responseBody, int responseCode) {
+        LocalDateTime startTime = (LocalDateTime) request.getAttribute("_startTime");
+        Long startMs = (Long) request.getAttribute("_startMs");
+        String requestBody = (String) request.getAttribute("_requestBody");
+        String method = request.getMethod();
+        String path = request.getRequestURI();
+        LocalDateTime endTime = LocalDateTime.now();
+        long durationMs = startMs != null ? System.currentTimeMillis() - startMs : 0;
+
+        String traceId = null;
+        String spanId = null;
+        Span currentSpan = tracer.currentSpan();
+        if (currentSpan != null) {
+            traceId = currentSpan.context().traceId();
+            spanId = currentSpan.context().spanId();
+        }
+
+        persistLog(traceId, spanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
+    }
+
+    // Runs in background thread — only uses pre-captured data, no thread-local access
+    @Async
+    public void persistLog(String traceId, String spanId, String method, String path,
+                           String requestBody, String responseBody, int responseCode,
+                           LocalDateTime startTime, LocalDateTime endTime, long durationMs) {
         try {
-            LocalDateTime startTime = (LocalDateTime) request.getAttribute("_startTime");
-            Long startMs = (Long) request.getAttribute("_startMs");
-            String requestBody = (String) request.getAttribute("_requestBody");
-
-            LocalDateTime endTime = LocalDateTime.now();
-            long durationMs = startMs != null ? System.currentTimeMillis() - startMs : 0;
-
-            String traceId = null;
-            String spanId = null;
-            Span currentSpan = tracer.currentSpan();
-            if (currentSpan != null) {
-                traceId = currentSpan.context().traceId();
-                spanId = currentSpan.context().spanId();
-            }
-
             ApiLog log = new ApiLog();
             log.setTraceId(traceId);
             log.setSpanId(spanId);
-            log.setMethod(request.getMethod());
-            log.setPath(request.getRequestURI());
+            log.setMethod(method);
+            log.setPath(path);
             log.setRequestBody(requestBody);
             log.setResponseBody(responseBody);
             log.setResponseCode(responseCode);
             log.setStartTime(startTime);
             log.setEndTime(endTime);
             log.setDurationMs(durationMs);
-
             apiLogRepository.save(log);
         } catch (Exception e) {
             logger.error("Failed to save API log to DB: {}", e.getMessage());
