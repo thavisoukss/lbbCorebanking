@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "api_log")
+@Table(name = "api_log_corebanking")
 @Data
 @NoArgsConstructor
 public class ApiLog {
