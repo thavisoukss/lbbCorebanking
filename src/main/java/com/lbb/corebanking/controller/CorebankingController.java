@@ -198,6 +198,14 @@ public class CorebankingController {
         request.setAttribute("_startMs", System.currentTimeMillis());
         request.setAttribute("_requestBody", toJson(req));
         request.setAttribute("_requestId", UUID.randomUUID().toString());
+
+        StringBuilder headers = new StringBuilder();
+        java.util.Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String name = headerNames.nextElement();
+            headers.append(name).append(": ").append(request.getHeader(name)).append(" | ");
+        }
+        logger.info("******** request headers | {} {} | {}", request.getMethod(), request.getRequestURI(), headers);
     }
 
     private String toJson(Object obj) {
