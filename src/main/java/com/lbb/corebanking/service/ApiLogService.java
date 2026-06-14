@@ -7,6 +7,7 @@ import io.micrometer.tracing.Tracer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,6 +24,7 @@ public class ApiLogService {
         this.tracer = tracer;
     }
 
+    @Async
     public void save(HttpServletRequest request, String responseBody, int responseCode) {
         try {
             LocalDateTime startTime = (LocalDateTime) request.getAttribute("_startTime");
