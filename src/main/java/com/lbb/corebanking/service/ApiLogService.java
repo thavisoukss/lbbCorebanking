@@ -40,8 +40,12 @@ public class ApiLogService {
         if (currentSpan != null) {
             traceId = currentSpan.context().traceId();
             spanId = currentSpan.context().spanId();
+        } else if (request.getHeader("X-B3-TraceId") != null) {
+            // fallback: read from B3 propagation headers sent by upstream service
+            traceId = request.getHeader("X-B3-TraceId");
+            spanId = request.getHeader("X-B3-SpanId");
         } else {
-            // fallback: use self-generated request ID when Micrometer span is not available
+            // last fallback: use self-generated UUID when no tracing context available
             traceId = (String) request.getAttribute("_requestId");
             spanId = null;
         }
