@@ -38,6 +38,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/corebanking")
@@ -107,7 +108,7 @@ public class CorebankingController {
         logger.info("******** start request | {} {}", request.getMethod(), request.getRequestURI());
         ResponseEntity<StatementRes> result = ResponseEntity.ok(coreBankingService.getStatement(req));
         logger.info("******** end request   | {} {}", request.getMethod(), request.getRequestURI());
-        apiLogService.save(request, toJson(result.getBody()), result.getStatusCode().value());
+       // apiLogService.save(request, toJson(result.getBody()), result.getStatusCode().value());
         return result;
     }
 
@@ -196,6 +197,7 @@ public class CorebankingController {
         request.setAttribute("_startTime", LocalDateTime.now());
         request.setAttribute("_startMs", System.currentTimeMillis());
         request.setAttribute("_requestBody", toJson(req));
+        request.setAttribute("_requestId", UUID.randomUUID().toString());
     }
 
     private String toJson(Object obj) {

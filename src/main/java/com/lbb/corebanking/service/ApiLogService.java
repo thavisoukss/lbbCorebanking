@@ -34,12 +34,16 @@ public class ApiLogService {
         LocalDateTime endTime = LocalDateTime.now();
         long durationMs = startMs != null ? System.currentTimeMillis() - startMs : 0;
 
-        String traceId = null;
-        String spanId = null;
+        String traceId;
+        String spanId;
         Span currentSpan = tracer.currentSpan();
         if (currentSpan != null) {
             traceId = currentSpan.context().traceId();
             spanId = currentSpan.context().spanId();
+        } else {
+            // fallback: use self-generated request ID when Micrometer span is not available
+            traceId = (String) request.getAttribute("_requestId");
+            spanId = null;
         }
 
         persistLog(traceId, spanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
