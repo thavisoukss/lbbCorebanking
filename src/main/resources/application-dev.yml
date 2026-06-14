@@ -15,8 +15,8 @@ spring:
 external:
   api:
     client:
-      connect-timeout: ${API_CLIENT_CONNECT_TIMEOUT:5000}
-      read-timeout: ${API_CLIENT_READ_TIMEOUT:10000}
+      connect-timeout: ${API_CLIENT_CONNECT_TIMEOUT:60000}
+      read-timeout: ${API_CLIENT_READ_TIMEOUT:60000}
     core-banking:
       url: ${COREBANKING_URL:http://172.16.4.112:8443/api/v1}
       x-api-key: ${COREBANKING_API_KEY:A0B8A2A9C758793A24CCDBD9451DA9A27767FE55}
