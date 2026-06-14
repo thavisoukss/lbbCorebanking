@@ -22,6 +22,9 @@ public class ApiLog {
     @Column(name = "span_id", length = 64)
     private String spanId;
 
+    @Column(name = "parent_span_id", length = 64)
+    private String parentSpanId;
+
     @Column(name = "method", length = 10)
     private String method;
 

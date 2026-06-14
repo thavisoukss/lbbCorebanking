@@ -34,34 +34,38 @@ public class ApiLogService {
         LocalDateTime endTime = LocalDateTime.now();
         long durationMs = startMs != null ? System.currentTimeMillis() - startMs : 0;
 
-        String traceId;
-        String spanId;
-        Span currentSpan = tracer.currentSpan();
-        if (currentSpan != null) {
-            traceId = currentSpan.context().traceId();
-            spanId = currentSpan.context().spanId();
-        } else if (request.getHeader("X-B3-TraceId") != null) {
-            // fallback: read from B3 propagation headers sent by upstream service
-            traceId = request.getHeader("X-B3-TraceId");
-            spanId = request.getHeader("X-B3-SpanId");
-        } else {
-            // last fallback: use self-generated UUID when no tracing context available
-            traceId = (String) request.getAttribute("_requestId");
-            spanId = null;
+        // Priority 1: B3 headers from upstream service (API Gateway)
+        String traceId    = (String) request.getAttribute("_traceId");
+        String spanId     = (String) request.getAttribute("_spanId");
+        String parentSpanId = (String) request.getAttribute("_parentSpanId");
+
+        // Priority 2: Micrometer current span
+        if (traceId == null) {
+            Span currentSpan = tracer.currentSpan();
+            if (currentSpan != null) {
+                traceId = currentSpan.context().traceId();
+                spanId  = currentSpan.context().spanId();
+            }
         }
 
-        persistLog(traceId, spanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
+        // Priority 3: self-generated UUID
+        if (traceId == null) {
+            traceId = (String) request.getAttribute("_requestId");
+        }
+
+        persistLog(traceId, spanId, parentSpanId, method, path, requestBody, responseBody, responseCode, startTime, endTime, durationMs);
     }
 
     // Runs in background thread — only uses pre-captured data, no thread-local access
     @Async
-    public void persistLog(String traceId, String spanId, String method, String path,
+    public void persistLog(String traceId, String spanId, String parentSpanId, String method, String path,
                            String requestBody, String responseBody, int responseCode,
                            LocalDateTime startTime, LocalDateTime endTime, long durationMs) {
         try {
             ApiLog log = new ApiLog();
             log.setTraceId(traceId);
             log.setSpanId(spanId);
+            log.setParentSpanId(parentSpanId);
             log.setMethod(method);
             log.setPath(path);
             log.setRequestBody(requestBody);

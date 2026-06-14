@@ -199,13 +199,16 @@ public class CorebankingController {
         request.setAttribute("_requestBody", toJson(req));
         request.setAttribute("_requestId", UUID.randomUUID().toString());
 
-        StringBuilder headers = new StringBuilder();
-        java.util.Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String name = headerNames.nextElement();
-            headers.append(name).append(": ").append(request.getHeader(name)).append(" | ");
-        }
-        logger.info("******** request headers | {} {} | {}", request.getMethod(), request.getRequestURI(), headers);
+        String traceId    = request.getHeader("X-B3-TraceId");
+        String spanId     = request.getHeader("X-B3-SpanId");
+        String parentSpanId = request.getHeader("X-B3-ParentSpanId");
+
+        request.setAttribute("_traceId",     traceId);
+        request.setAttribute("_spanId",      spanId);
+        request.setAttribute("_parentSpanId", parentSpanId);
+
+        logger.info("******** request headers | {} {} | X-B3-TraceId={} | X-B3-SpanId={} | X-B3-ParentSpanId={}",
+                request.getMethod(), request.getRequestURI(), traceId, spanId, parentSpanId);
     }
 
     private String toJson(Object obj) {
