@@ -26,7 +26,6 @@ import com.lbb.corebanking.domain.model.termdeposit.TermDepositInqueryRes;
 import com.lbb.corebanking.domain.model.topup.TopUpReq;
 import com.lbb.corebanking.domain.model.topup.TopUpRes;
 import com.lbb.corebanking.domain.model.widthdraw.WidthDrawReq;
-import com.lbb.corebanking.domain.model.widthdraw.WidthDrawRes;
 import com.lbb.corebanking.service.ConvertObject;
 import com.lbb.corebanking.service.CoreBankingService;
 import org.apache.logging.log4j.LogManager;

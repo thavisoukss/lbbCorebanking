@@ -2,10 +2,6 @@ spring:
   profiles:
     active: dev
 
-# ການຕັ້ງຄ່າລວມທີ່ໃຊ້ຄືກັນທັງໝົດ
-logging:
-  config: classpath:log4j2.xml
-
 management:
   tracing:
     sampling:
